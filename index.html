@@ -11,7 +11,7 @@
 <body>
     <div class="container" id="body">
 
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalNovo">Novo</button>
+        <button type="button" class="NovoPro btn btn-success" data-toggle="modal" data-target="#ModalPro">Novo</button>
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -29,76 +29,44 @@
 
 
     <!-- Modal Editar -->
-    <div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+    <div class="modal fade" id="ModalPro" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="TituloModalCentralizado">Editar</h5>
+                    <h5 class="modal-title" id="TituloEditar">Editar</h5>
+                    <h5 class="modal-title" id="TituloSalvar">Salvar</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
             <span aria-hidden="true">&times;</span>
           </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
+                    <div class="form-group" id="DisplayID">
                         <label for="disabledTextInput">Codigo</label>
-                        <input type="text" id="ECodigo" class="form-control" readonly="readonly">
+                        <input type="text" id="MCodigo" class="form-control" readonly="readonly">
                     </div>
                     <div class="form-group">
                         <label for="disabledTextInput">Desc</label>
-                        <input type="text" id="EDesc" class="form-control">
+                        <input type="text" id="MDesc" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="disabledTextInput">Qtd</label>
-                        <input type="text" id="EQtd" class="form-control">
+                        <input type="text" id="MQtd" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="disabledTextInput">Valor</label>
-                        <input type="text" id="EValor" class="form-control">
+                        <input type="text" id="MValor" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" id="FecharModal" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     <button type="button" id="EditarPro" class="btn btn-info">Editar mudanças</button>
+                    <button type="button" id="salvarPro" class="btn btn-success">Salvar mudanças</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- Fim Modal Editar -->
 
-    <!-- Modal Novo -->
-    <div class="modal fade" id="ModalNovo" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="TituloModalCentralizado">Novo</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="disabledTextInput">Desc</label>
-                        <input type="text" id="NDesc" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="disabledTextInput">Qtd</label>
-                        <input type="text" id="NQtd" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="disabledTextInput">Valor</label>
-                        <input type="text" id="NValor" class="form-control">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="FecharModal" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                    <button type="button" id="salvarPro" class="btn btn-success">Salvar Produto</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Fim Modal Novo -->
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -118,13 +86,13 @@
                 resposta = JSON.parse(resposta);
                 for (var i = 0; resposta.length > i; i++) {
                     //Adicionando registros retornados na tabela
-                    $('#CorpoTabela').append('<tr>' +
+                    $('#CorpoTabela').append('<tr id="tr' + resposta[i]["id"] + '">' +
                         '<td scope="col">' + resposta[i]["id"] + '</td>' +
                         '<td scope="col">' + resposta[i]["Descr"] + '</td>' +
                         '<td scope="col">' + resposta[i]["Qtd"] + '</td>' +
                         '<td scope="col">' + resposta[i]["Valor"] + '</td>' +
                         '<td scope="col">' +
-                        '<button type="button" class="EditarPro btn btn-info" data-toggle="modal"  data-target="#ModalEditar">Editar</button>' +
+                        '<button type="button" class="EditarPro btn btn-info" data-toggle="modal"  data-target="#ModalPro">Editar</button>' +
                         '<button type="button" id="DeletarPro" class="btn btn-danger">Excluir</button>' +
                         '</td></tr>');
                 }
@@ -140,13 +108,13 @@
             }).done(function(resposta) {
                 resposta = JSON.parse(resposta);
                 //Adicionando registros retornados na tabela
-                $('#CorpoTabela').append('<tr>' +
+                $('#CorpoTabela').append('<tr id="tr' + resposta[0]["id"] + '">' +
                     '<td scope="col">' + resposta[0]["id"] + '</td>' +
                     '<td scope="col">' + resposta[0]["Descr"] + '</td>' +
                     '<td scope="col">' + resposta[0]["Qtd"] + '</td>' +
                     '<td scope="col">' + resposta[0]["Valor"] + '</td>' +
                     '<td scope="col">' +
-                    '<button type="button" class="EditarPro btn btn-info" data-toggle="modal"  data-target="#ModalEditar">Editar</button>' +
+                    '<button type="button" class="EditarPro btn btn-info" data-toggle="modal"  data-target="#ModalPro">Editar</button>' +
                     '<button type="button" id="DeletarPro" class="btn btn-danger">Excluir</button>' +
                     '</td></tr>');
 
@@ -155,13 +123,36 @@
             });
         }
 
+        function MudaLinha(cod) {
+            $.ajax({
+                method: "POST",
+                url: "Select.php",
+                data: {
+                    cod: cod,
+                }
+            }).done(function(resposta) {
+                resposta = JSON.parse(resposta);
+                $('#tr' + cod).html('<td scope="col">' + resposta[0]["id"] + '</td>' +
+                    '<td scope="col">' + resposta[0]["Descr"] + '</td>' +
+                    '<td scope="col">' + resposta[0]["Qtd"] + '</td>' +
+                    '<td scope="col">' + resposta[0]["Valor"] + '</td>' +
+                    '<td scope="col">' +
+                    '<button type="button" class="EditarPro btn btn-info" data-toggle="modal"  data-target="#ModalPro">Editar</button>' +
+                    '<button type="button" id="DeletarPro" class="btn btn-danger">Excluir</button>' +
+                    '</td>')
+            }).fail(function() {
+                console.log('falha ao Procurar');
+            });
+        }
+
+
         GerarTabela();
 
         $('#salvarPro').click(function() {
 
-            var Ndesc = $("#NDesc").val();
-            var Nqtd = $("#NQtd").val();
-            var Nvalor = $("#NValor").val();
+            var Ndesc = $("#MDesc").val();
+            var Nqtd = $("#MQtd").val();
+            var Nvalor = $("#MValor").val();
 
             $.ajax({
                 method: "POST",
@@ -177,21 +168,22 @@
                 if (resposta == '"Cadastro Com Sucesso!"') {
                     AddLinha();
                     $("#FecharModal").trigger('click');
+                    mostraDialogo(resposta, 'alert-success');
                 } else {
-                    alert('falha ao Cadastrar');
+                    mostraDialogo(resposta, 'alert-danger');
                 }
             }).fail(function() {
                 $("#FecharModal").trigger('click');
-                alert('falha ao Cadastrar');
+                mostraDialogo('falha ao Cadastrar', 'alert-danger');
             });
         });
 
         $('#EditarPro').click(function() {
 
-            var ECod = $("#ECodigo").val();
-            var Edesc = $("#EDesc").val();
-            var Eqtd = $("#EQtd").val();
-            var Evalor = $("#EValor").val();
+            var ECod = $("#MCodigo").val();
+            var Edesc = $("#MDesc").val();
+            var Eqtd = $("#MQtd").val();
+            var Evalor = $("#MValor").val();
 
             $.ajax({
                 method: "POST",
@@ -203,13 +195,13 @@
                     valor: Evalor
                 }
             }).done(function(resposta) {
-                $(".FecharModal").trigger('click');
-                alert(resposta);
-                GerarTabela();
+                // alert(resposta);
+                $("#FecharModal").trigger('click');
+                MudaLinha(ECod);
+                mostraDialogo(resposta, 'alert-success');
             }).fail(function() {
                 $(".FecharModal").trigger('click');
-                alert('falha ao Cadastrar');
-                GerarTabela();
+                mostraDialogo('falha ao Cadastrar', 'alert-danger');
             });
         });
 
@@ -228,11 +220,10 @@
                     cod: DCod,
                 }
             }).done(function(resposta) {
-                alert(resposta);
+                mostraDialogo(resposta, 'alert-success');
                 par.remove();
             }).fail(function() {
-                alert('falha ao Cadastrar');
-                par.remove();
+                mostraDialogo('falha ao Deletar', 'alert-danger');
             });
         });
 
@@ -244,19 +235,72 @@
         $(document).on('click', '.EditarPro', function(e) {
             e.preventDefault;
             var tdobj = $(this).closest('tr').find('td');
-
             var cod = tdobj[0].innerHTML;
             var desc = tdobj[1].innerHTML;
             var qtd = tdobj[2].innerHTML;
             var valor = tdobj[3].innerHTML;
 
-            $('#ECodigo').val(cod);
-            $('#EDesc').val(desc);
-            $('#EQtd').val(qtd);
-            $('#EValor').val(valor);
+
+            $('#TituloEditar').css('display', 'block');
+            $('#EditarPro').css('display', 'block');
+            $('#DisplayID').css('display', 'block');
+            $('#TituloSalvar').css('display', 'none');
+            $('#salvarPro').css('display', 'none');
+
+            $('#MCodigo').val(cod);
+            $('#MDesc').val(desc);
+            $('#MQtd').val(qtd);
+            $('#MValor').val(valor);
 
         });
+
+        $(document).on('click', '.NovoPro', function() {
+
+            $('#TituloEditar').css('display', 'none');
+            $('#EditarPro').css('display', 'none');
+            $('#DisplayID').css('display', 'none');
+            $('#TituloSalvar').css('display', 'block');
+            $('#salvarPro').css('display', 'block');
+
+            $('#MCodigo').val('');
+            $('#MDesc').val('');
+            $('#MQtd').val('');
+            $('#MValor').val('');
+        });
     });
+
+
+    function mostraDialogo(mensagem, tipo) {
+
+        // se não setar o tempo, o padrão é 4.5 segundos
+        var tempo = 4500;
+
+        // monta o css da mensagem para que fique flutuando na frente de todos elementos da página
+        var cssMessage = "display: block; position: fixed; top: 0; left: 20%; right: 20%; width: auto; padding-top: 10px; z-index: 9999";
+        var cssInner = "margin: 0 auto; box-shadow: 1px 1px 5px black; text-align:center";
+
+        // monta o html da mensagem com Bootstrap
+        var dialogo = "";
+        dialogo += '<div id="message" style="' + cssMessage + '">';
+        dialogo += '    <div class="alert ' + tipo + ' alert-dismissable" style="' + cssInner + '">';
+        dialogo += '    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>';
+        dialogo += mensagem;
+        dialogo += '    </div>';
+        dialogo += '</div>';
+
+        // adiciona ao body a mensagem com o efeito de fade
+        $("body").append(dialogo);
+        $("#message").hide();
+        $("#message").fadeIn(200);
+
+        // contador de tempo para a mensagem sumir
+        setTimeout(function() {
+            $('#message').fadeOut(300, function() {
+                $(this).remove();
+            });
+        }, tempo); // milliseconds
+
+    }
 </script>
 
 </html>

@@ -70,7 +70,7 @@
             $sql = "SELECT * FROM Produtos
                         where id = $this->id";
                         
-            return mysqli_fetch_array(mysqli_query($obj->Conectar(), $sql));
+            return mysqli_query($objB->Conectar(), $sql);
         }
      }
 ?>
